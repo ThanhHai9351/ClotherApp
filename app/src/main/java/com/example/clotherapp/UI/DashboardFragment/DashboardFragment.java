@@ -1,5 +1,6 @@
 package com.example.clotherapp.UI.DashboardFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,11 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
+import com.example.clotherapp.ADAPTER.FavouriteAdapter;
+import com.example.clotherapp.ADAPTER.ProductAdapter;
+import com.example.clotherapp.DAO.DAOProduct;
 import com.example.clotherapp.MODEL.Favourite;
-import com.example.clotherapp.MODEL.ProductAdapter;
+import com.example.clotherapp.MODEL.Product;
 import com.example.clotherapp.R;
-import com.google.android.material.tabs.TabLayout;
+import com.example.clotherapp.UI.Detail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +32,9 @@ import java.util.List;
  */
 public class DashboardFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewProduct;
     private ProductAdapter productAdapter;
-    private List<Favourite> productList;
+    private ArrayList<Product> productList;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,29 +83,44 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
-    public void controls(View view)
-    {
-        recyclerView = view.findViewById(R.id.recyclerView);
+
+    public void controls(View view) {
+        recyclerViewProduct = view.findViewById(R.id.recycle_dashboard);
 
         productList = new ArrayList<>();
-        populateProductList();
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        productAdapter = new ProductAdapter(productList);
-        recyclerView.setAdapter(productAdapter);
+        recyclerViewProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        DAOProduct dao = new DAOProduct(getContext());
+        dao.getProductFromData(new DAOProduct.DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Product> products) {
+                productList = products;
+                productAdapter = new ProductAdapter(getContext(), products);
+                recyclerViewProduct.setAdapter(productAdapter);
+
+                productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Product product) {
+                        Intent intent = new Intent(getContext(), Detail.class);
+                        intent.putExtra("id",product.getId());
+                        intent.putExtra("name",product.getNameProduct());
+                        intent.putExtra("image",product.getImage());
+                        intent.putExtra("star",product.getStar());
+                        intent.putExtra("price",product.getPrice());
+                        intent.putExtra("quantity",product.getQuantity());
+                        intent.putExtra("categoryid",product.getCategoryID());
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-    private void populateProductList() {
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",  R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",   R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",  R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",   R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",  R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",   R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",  R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",   R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",  R.drawable.product,80));
-        productList.add(new Favourite("Bluebell Hand Block Tiered Dress",   R.drawable.product,80));
-        // Add more products
-    }
+
+
 }

@@ -24,7 +24,7 @@
                 app:cardCornerRadius="5dp">
 
                 <ImageView
-                    android:id="@+id/productImage"
+                    android:id="@+id/img_product_dashboard"
                     android:layout_width="match_parent"
                     android:layout_height="186dp"
                     tools:srcCompat="@drawable/product"
@@ -34,7 +34,7 @@
 
 
             <TextView
-                android:id="@+id/productName"
+                android:id="@+id/tw_name_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -49,7 +49,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/productPrice"
+                    android:id="@+id/tw_price_product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

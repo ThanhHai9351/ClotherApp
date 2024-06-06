@@ -84,16 +84,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_weight="1" />
+
             </LinearLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recycle_dashboard"
                 android:layout_width="match_parent"
-                android:layout_height="590dp"
-                android:layout_marginTop="0dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="500dp" />
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -102,6 +99,9 @@
                 android:layout_gravity="center"
                 android:layout_height="580dp"
                 app:srcCompat="@drawable/popular_nearly" />
+
+
+
         </LinearLayout>
     </ScrollView>
 

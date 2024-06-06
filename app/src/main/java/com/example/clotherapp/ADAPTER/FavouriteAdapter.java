@@ -4,58 +4,66 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 
 import com.example.clotherapp.MODEL.Favourite;
 import com.example.clotherapp.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class FavouriteAdapter extends ArrayAdapter {
-    Context context;
-    int layout;
-    ArrayList<Favourite> arrayList;
+public class FavouriteAdapter extends BaseAdapter {
+    private Context context;
+    private int layout;
+    private List<Favourite> favourites;
 
-    public FavouriteAdapter(Context context, int layout, ArrayList<Favourite> arrayList) {
-        super(context, layout,arrayList);
+    public FavouriteAdapter(Context context, int layout, List<Favourite> favourites) {
         this.context = context;
         this.layout = layout;
-        this.arrayList = arrayList;
+        this.favourites = favourites;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Favourite fv = arrayList.get(position);
+    public int getCount() {
+        return favourites.size();
+    }
 
-        if(convertView == null)
-        {
-            convertView = LayoutInflater.from(context).inflate(layout,null);
+    @Override
+    public Object getItem(int position) {
+        return favourites.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(layout, parent, false);
+            holder = new ViewHolder();
+            holder.img = convertView.findViewById(R.id.img_product_favourite);
+            holder.name = convertView.findViewById(R.id.tw_name_favourite);
+            holder.price = convertView.findViewById(R.id.tw_price_favourite);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        ImageView img = convertView.findViewById(R.id.img_product_favourite);
-        TextView name = convertView.findViewById(R.id.tw_name_favourite);
-        TextView price = convertView.findViewById(R.id.tw_price_favourite);
-
-
-
-        img.setImageResource(fv.getImg());
-        name.setText(fv.getName());
-        price.setText("$ " + String.valueOf(fv.getPrice()));
-
-
-
+        Favourite favourite = favourites.get(position);
+        holder.img.setImageResource(favourite.getImg());
+        holder.name.setText(favourite.getName());
+        holder.price.setText("$ " + favourite.getPrice());
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        ImageView img;
+        TextView name;
+        TextView price;
     }
 }

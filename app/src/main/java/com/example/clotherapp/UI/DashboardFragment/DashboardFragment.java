@@ -108,7 +108,7 @@ public class DashboardFragment extends Fragment {
                         intent.putExtra("star",product.getStar());
                         intent.putExtra("price",product.getPrice());
                         intent.putExtra("quantity",product.getQuantity());
-                        intent.putExtra("categoryid",product.getCategoryID());
+                        intent.putExtra("description",product.getDescription());
                         startActivity(intent);
                     }
                 });

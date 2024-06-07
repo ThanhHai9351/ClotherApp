@@ -1,38 +1,75 @@
 package com.example.clotherapp.MODEL;
 
 public class Favourite {
-    String name;
-    int img;
+    int id,idUser,idProduct;
+    String nameUser,nameProduct,image;
+    Double price;
 
-    public String getName() {
-        return name;
+    public String getImage() {
+        return image;
     }
 
-    public Favourite(String name, int img, int price) {
-        this.name = name;
-        this.img = img;
-        this.price = price;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getImg() {
-        return img;
-    }
-
-    public void setImg(int img) {
-        this.img = img;
-    }
-
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    int price;
+    public int getId() {
+        return id;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdProduct() {
+        return idProduct;
+    }
+
+    public Favourite(int id, int idUser, int idProduct, String nameUser, String nameProduct, String image, Double price) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idProduct = idProduct;
+        this.nameUser = nameUser;
+        this.nameProduct = nameProduct;
+        this.image = image;
+        this.price = price;
+    }
+
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
+    }
+
+
 }

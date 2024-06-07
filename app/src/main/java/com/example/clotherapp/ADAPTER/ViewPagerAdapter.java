@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.example.clotherapp.UI.DashboardFragment.DashboardFragment;
 import com.example.clotherapp.UI.FavouriteFragment.FavouriteFragment;
 import com.example.clotherapp.UI.InfoFragment.InfoFragment;
+import com.example.clotherapp.UI.ProductFragment.ProductFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
@@ -22,7 +23,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new DashboardFragment();
             case 1:
-                return new FavouriteFragment();
+                return new ProductFragment();
             case 2:
                 return new FavouriteFragment();
             case 3:

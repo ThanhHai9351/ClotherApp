@@ -1,18 +1,26 @@
 package com.example.clotherapp.UI.FavouriteFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.clotherapp.ADAPTER.FavouriteAdapter;
+import com.example.clotherapp.ADAPTER.ProductAdapter;
+import com.example.clotherapp.DAO.DAOFavourite;
+import com.example.clotherapp.DAO.DAOProduct;
 import com.example.clotherapp.MODEL.Favourite;
+import com.example.clotherapp.MODEL.Product;
 import com.example.clotherapp.R;
-
+import com.example.clotherapp.UI.Detail;
 
 
 import java.util.ArrayList;
@@ -26,7 +34,9 @@ public class FavouriteFragment extends Fragment {
 
     ListView lvFavourite;
     FavouriteAdapter adapter;
-    ArrayList<Favourite> arrayList = new ArrayList<>();
+    ArrayList<Favourite> arrayList;
+
+    TextView count;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,19 +83,32 @@ public class FavouriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favourite, container, false);
         controls(view);
-        adapter = new FavouriteAdapter(getContext(),R.layout.item_favourite_product,arrayList);
-        lvFavourite.setAdapter(adapter);
         return view;
     }
 
-    public void controls(View view)
-    {
+    public void controls(View view) {
         lvFavourite = view.findViewById(R.id.lv_favourite);
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
-        arrayList.add(new Favourite("Quần âu",R.drawable.familyclother,80));
+        count = view.findViewById(R.id.tw_count_favourite);
+
+        arrayList = new ArrayList<>();
+
+        DAOFavourite dao = new DAOFavourite(getContext());
+        dao.getFavouriteFromData(new DAOFavourite.DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Favourite> favourites) {
+                arrayList = favourites;
+                adapter = new FavouriteAdapter(getContext(),R.layout.item_favourite_product,arrayList);
+                lvFavourite.setAdapter(adapter);
+
+                int size = arrayList.size();
+                count.setText("Số lượng sản phẩm: "+String.valueOf(size));
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
     }
 }

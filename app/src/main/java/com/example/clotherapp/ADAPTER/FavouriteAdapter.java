@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.clotherapp.MODEL.Favourite;
 import com.example.clotherapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,8 +55,10 @@ public class FavouriteAdapter extends BaseAdapter {
         }
 
         Favourite favourite = favourites.get(position);
-        holder.img.setImageResource(favourite.getImg());
-        holder.name.setText(favourite.getName());
+        Picasso.with(context).load(favourite.getImage())
+                .resize(300, 300)
+                .into(holder.img);
+        holder.name.setText(favourite.getNameProduct());
         holder.price.setText("$ " + favourite.getPrice());
 
         return convertView;

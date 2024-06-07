@@ -7,11 +7,9 @@ public class Account {
     String name,username,password,phone,address,role;
     Date dob;
 
-    public int getId() {
-        return id;
-    }
+    boolean gender;
 
-    public Account(int id, String name, String username, String password,Date dob, String phone, String address, String role,  Boolean gender) {
+    public Account(int id, String name, String username, String password, String phone, String address, String role, Date dob, boolean gender) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -22,6 +20,20 @@ public class Account {
         this.dob = dob;
         this.gender = gender;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -91,5 +103,4 @@ public class Account {
         this.gender = gender;
     }
 
-    Boolean gender;
 }

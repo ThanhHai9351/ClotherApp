@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.clotherapp.MODEL.Favourite;
 import com.example.clotherapp.R;
@@ -14,59 +16,71 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class FavouriteAdapter extends BaseAdapter {
-    private Context context;
-    private int layout;
-    private List<Favourite> favourites;
+public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
 
-    public FavouriteAdapter(Context context, int layout, List<Favourite> favourites) {
+    private Context context;
+    private List<Favourite> favourites;
+    private OnItemClickListener listener;
+
+    // Constructor
+    public FavouriteAdapter(Context context, List<Favourite> favourites) {
         this.context = context;
-        this.layout = layout;
         this.favourites = favourites;
     }
 
-    @Override
-    public int getCount() {
-        return favourites.size();
+    public interface OnItemClickListener {
+        void onItemClick(Favourite favourite);
     }
 
-    @Override
-    public Object getItem(int position) {
-        return favourites.get(position);
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    // ViewHolder class
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView img;
+        public TextView name;
+        public TextView price;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(layout, parent, false);
-            holder = new ViewHolder();
-            holder.img = convertView.findViewById(R.id.img_product_favourite);
-            holder.name = convertView.findViewById(R.id.tw_name_favourite);
-            holder.price = convertView.findViewById(R.id.tw_price_favourite);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        public ViewHolder(View itemView) {
+            super(itemView);
+            img = itemView.findViewById(R.id.img_product_favourite);
+            name = itemView.findViewById(R.id.tw_name_favourite);
+            price = itemView.findViewById(R.id.tw_price_favourite);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(favourites.get(position));
+                        }
+                    }
+                }
+            });
         }
+    }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favourite_product, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Favourite favourite = favourites.get(position);
         Picasso.with(context).load(favourite.getImage())
                 .resize(300, 300)
                 .into(holder.img);
         holder.name.setText(favourite.getNameProduct());
         holder.price.setText("$ " + favourite.getPrice());
-
-        return convertView;
     }
 
-    static class ViewHolder {
-        ImageView img;
-        TextView name;
-        TextView price;
+    @Override
+    public int getItemCount() {
+        return favourites.size();
     }
 }

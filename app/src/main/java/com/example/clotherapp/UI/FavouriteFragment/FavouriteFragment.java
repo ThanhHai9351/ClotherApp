@@ -1,27 +1,33 @@
 package com.example.clotherapp.UI.FavouriteFragment;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.clotherapp.ADAPTER.FavouriteAdapter;
-import com.example.clotherapp.ADAPTER.ProductAdapter;
 import com.example.clotherapp.DAO.DAOFavourite;
-import com.example.clotherapp.DAO.DAOProduct;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.MODEL.Favourite;
-import com.example.clotherapp.MODEL.Product;
 import com.example.clotherapp.R;
-import com.example.clotherapp.UI.Detail;
 
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -32,11 +38,15 @@ import java.util.ArrayList;
  */
 public class FavouriteFragment extends Fragment {
 
-    ListView lvFavourite;
+    RecyclerView recycler_favourite;
     FavouriteAdapter adapter;
     ArrayList<Favourite> arrayList;
 
     TextView count;
+
+    public String ip = DataHolder.getInstance().getIp();
+
+    public String urlDeleteFavourite = "http://" + ip + "/clotherapp/handle/deleteFavourite.php";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,28 +97,85 @@ public class FavouriteFragment extends Fragment {
     }
 
     public void controls(View view) {
-        lvFavourite = view.findViewById(R.id.lv_favourite);
+        recycler_favourite = view.findViewById(R.id.recycle_favorite);
         count = view.findViewById(R.id.tw_count_favourite);
 
         arrayList = new ArrayList<>();
+        int idUser = DataHolder.getInstance().getId();
 
         DAOFavourite dao = new DAOFavourite(getContext());
         dao.getFavouriteFromData(new DAOFavourite.DataCallback() {
             @Override
             public void onSuccess(ArrayList<Favourite> favourites) {
-                arrayList = favourites;
-                adapter = new FavouriteAdapter(getContext(),R.layout.item_favourite_product,arrayList);
-                lvFavourite.setAdapter(adapter);
+                for (Favourite fv : favourites) {
+                    if (fv.getIdUser() == idUser) {
+                        arrayList.add(fv);
+                    }
+                }
+                adapter = new FavouriteAdapter(getContext(), arrayList);
+                recycler_favourite.setLayoutManager(new LinearLayoutManager(getContext()));
+                recycler_favourite.setAdapter(adapter);
 
                 int size = arrayList.size();
-                count.setText("Số lượng sản phẩm: "+String.valueOf(size));
+                count.setText("Số lượng sản phẩm: " + size);
+
+                events();
             }
 
             @Override
             public void onError(String error) {
-
+                // Handle error
             }
         });
+    }
 
+    public void events() {
+        adapter.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Favourite favourite) {
+                // Show confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Confirmation")
+                        .setMessage("Are you sure you want to delete this item?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteItem(submit(favourite.getId()));
+                                arrayList.remove(favourite);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+        });
+    }
+
+    private JSONObject submit(int id) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", id);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Loi tao json", Toast.LENGTH_SHORT).show();
+        }
+        return json;
+    }
+
+
+    private void deleteItem(JSONObject jsonObject) {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlDeleteFavourite, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "That bai: " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonObjectRequest);
     }
 }

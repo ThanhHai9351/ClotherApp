@@ -13,27 +13,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.clotherapp.MODEL.Cart;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.R;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 public class Detail extends AppCompatActivity {
 
     ImageButton btnBack;
-    Button decrease,increase,white,black,red,s,m,l,xl,xxl;
+    Button decrease,increase,white,black,red,s,m,l,xl,xxl,btnAddtocart;
     ImageView img,heart;
     TextView name,price,quantity,description;
 
-    boolean isHeart = false;
+    String ip = DataHolder.getInstance().getIp();
+    int idpro,size = 37,sl = 1;
+    String imgpro,namepro,despro,color = "white";
+    Double pricepro;
+
+    String urlAddFavourite = "http://" + ip + "/clotherapp/handle/createFavourite.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         controls();
         Intent get = getIntent();
-        String imgpro = get.getStringExtra("image");
-        String namepro = get.getStringExtra("name");
-        Double pricepro = get.getDoubleExtra("price",0);
-        String despro = get.getStringExtra("description");
+         imgpro = get.getStringExtra("image");
+         namepro = get.getStringExtra("name");
+         pricepro = get.getDoubleExtra("price",0);
+         despro = get.getStringExtra("description");
+        idpro =get.getIntExtra("id",0);
         Picasso.with(this).load(imgpro)
                 .resize(300, 300)
                 .into(img);
@@ -62,10 +79,21 @@ public class Detail extends AppCompatActivity {
         xl = findViewById(R.id.btn_xl);
         xxl = findViewById(R.id.btn_2xl);
         heart = findViewById(R.id.img_heart);
+        btnAddtocart = findViewById(R.id.btn_add_to_cart);
     }
+
 
     public void events()
     {
+
+        btnAddtocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cart cart = new Cart();
+                Toast.makeText(getApplicationContext(),"Đã thêm vào yêu thích",Toast.LENGTH_SHORT).show();
+                cart.addCart(getApplicationContext(),DataHolder.getInstance().getId(), idpro,sl,pricepro,color,size);
+            }
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +104,6 @@ public class Detail extends AppCompatActivity {
         increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sl = Integer.parseInt(quantity.getText().toString());
                 sl++;
                 quantity.setText(String.valueOf(sl));
             }
@@ -85,7 +112,6 @@ public class Detail extends AppCompatActivity {
         decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sl = Integer.parseInt(quantity.getText().toString());
                 if(sl > 1)
                 {
                     sl = sl -1;
@@ -97,6 +123,7 @@ public class Detail extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                color = "red";
                 red.setTextColor(Color.WHITE);
                 red.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 black.setTextColor(Color.BLACK);
@@ -109,6 +136,7 @@ public class Detail extends AppCompatActivity {
         black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                color = "black";
                 black.setTextColor(Color.WHITE);
                 black.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 red.setTextColor(Color.BLACK);
@@ -120,6 +148,7 @@ public class Detail extends AppCompatActivity {
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                color = "white";
                 white.setTextColor(Color.WHITE);
                 white.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 red.setTextColor(Color.BLACK);
@@ -132,6 +161,7 @@ public class Detail extends AppCompatActivity {
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                size=37;
                 s.setTextColor(Color.WHITE);
                 s.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 m.setTextColor(Color.BLACK);
@@ -147,6 +177,7 @@ public class Detail extends AppCompatActivity {
         m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                size=38;
                 m.setTextColor(Color.WHITE);
                 m.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 s.setTextColor(Color.BLACK);
@@ -162,6 +193,7 @@ public class Detail extends AppCompatActivity {
         l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                size=39;
                 l.setTextColor(Color.WHITE);
                 l.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 m.setTextColor(Color.BLACK);
@@ -177,6 +209,7 @@ public class Detail extends AppCompatActivity {
         xl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                size=40;
                 xl.setTextColor(Color.WHITE);
                 xl.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 m.setTextColor(Color.BLACK);
@@ -192,6 +225,7 @@ public class Detail extends AppCompatActivity {
         xxl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                size=41;
                 xxl.setTextColor(Color.WHITE);
                 xxl.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
                 m.setTextColor(Color.BLACK);
@@ -208,18 +242,37 @@ public class Detail extends AppCompatActivity {
         heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isHeart)
-                {
-                    heart.setImageResource(R.drawable.heart_full);
-                    Toast.makeText(getApplicationContext(),"Đã thích",Toast.LENGTH_SHORT).show();
-                    isHeart = true;
-                }else{
-                    isHeart = false;
-                    heart.setImageResource(R.drawable.heart_non);
-                    Toast.makeText(getApplicationContext(),"Đã bỏ thích",Toast.LENGTH_SHORT).show();
-                }
-
+                handleInsertfavourite(submit(DataHolder.getInstance().getId(),idpro ));
+                Toast.makeText(getApplicationContext(), "Bạn đã yêu thích!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private JSONObject submit(int iduser,int idproduct) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("iduser",iduser );
+            json.put("idproduct",idproduct );
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Loi tao json", Toast.LENGTH_SHORT).show();
+        }
+        return json;
+    }
+
+
+    private void handleInsertfavourite(JSONObject jsonObject) {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlAddFavourite, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getApplicationContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "That bai: " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonObjectRequest);
     }
 }

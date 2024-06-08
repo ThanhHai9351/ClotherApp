@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.clotherapp.MODEL.Account;
+import com.example.clotherapp.MODEL.DataHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +27,7 @@ import java.util.Locale;
 
 public class DAOAccount {
     private static final String TAG = "DAOAccount";
-    private static final String IP = "192.168.35.103:80";
+    private static final String IP = DataHolder.getInstance().getIp();
     private static final String URL = "http://" + IP + "/clotherapp/handle/getDataAccount.php";
     private RequestQueue requestQueue;
 

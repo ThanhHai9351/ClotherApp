@@ -1,5 +1,7 @@
 package com.example.clotherapp.UI.DashboardFragment;
 
+import static android.content.Intent.getIntent;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,13 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clotherapp.ADAPTER.ProductAdapter;
+import com.example.clotherapp.DAO.DAOAccount;
 import com.example.clotherapp.DAO.DAOProduct;
+import com.example.clotherapp.MODEL.Account;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.MODEL.Product;
 import com.example.clotherapp.R;
 import com.example.clotherapp.UI.Detail;
+import com.example.clotherapp.UI.Search;
 
 import java.util.ArrayList;
 
@@ -30,6 +38,11 @@ public class DashboardFragment extends Fragment {
      RecyclerView recyclerViewProduct;
      ProductAdapter productAdapter;
      ArrayList<Product> productList;
+     ImageView imgSearch;
+
+     TextView nameUser;
+
+     String usname;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,8 +92,28 @@ public class DashboardFragment extends Fragment {
     }
 
 
+
+
     public void controls(View view) {
         recyclerViewProduct = view.findViewById(R.id.recycle_dashboard);
+        nameUser = view.findViewById(R.id.tw_name_user_dashboard);
+        nameUser.setText(DataHolder.getInstance().getName());
+        imgSearch = view.findViewById(R.id.img_search);
+
+        DAOAccount daoAccount = new DAOAccount(getContext());
+        daoAccount.getAccountsFromData(new DAOAccount.DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Account> accounts) {
+                for (Account a : accounts)
+                {
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
 
         productList = new ArrayList<>();
 
@@ -112,6 +145,14 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onError(String error) {
                 Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), Search.class);
+                startActivity(i);
             }
         });
     }

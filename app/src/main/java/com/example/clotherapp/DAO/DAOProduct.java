@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.MODEL.Product;
 
 import org.json.JSONArray;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class DAOProduct {
 
     private static final String TAG = "DAOProduct";
-    public String ip = "192.168.35.103:80";
+    public String ip = DataHolder.getInstance().getIp();
     public String url = "http://" + ip + "/clotherapp/handle/getDataProduct.php";
     private RequestQueue requestQueue;
 

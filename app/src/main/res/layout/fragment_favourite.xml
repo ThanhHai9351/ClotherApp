@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:layout_marginRight="100dp"
             android:gravity="center"
-            android:text="Product Details"
+            android:text="Favourites"
             android:textColor="#000"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -59,10 +59,11 @@
         android:background="@drawable/custom_background_product"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/lv_favourite"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_favorite"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </LinearLayout>

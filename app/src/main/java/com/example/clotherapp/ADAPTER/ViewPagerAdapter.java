@@ -9,6 +9,7 @@ import com.example.clotherapp.UI.DashboardFragment.DashboardFragment;
 import com.example.clotherapp.UI.FavouriteFragment.FavouriteFragment;
 import com.example.clotherapp.UI.InfoFragment.InfoFragment;
 import com.example.clotherapp.UI.ProductFragment.ProductFragment;
+import com.example.clotherapp.UI.ShoppingCartFragment.ShoppingCartFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
@@ -27,7 +28,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return new FavouriteFragment();
             case 3:
-                return new DashboardFragment();
+                return new ShoppingCartFragment();
             case 4:
                 return new InfoFragment();
             default:  return new DashboardFragment();

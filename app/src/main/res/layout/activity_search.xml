@@ -36,7 +36,9 @@
             android:hint="Search Best Items For You"
             android:inputType="text"
             android:padding="10dp"
+            android:textColorHint="@color/black"
             android:textSize="18dp"
+            android:textColor="@color/black"
             android:shadowColor="@color/black"
             android:elevation="10dp" />
 

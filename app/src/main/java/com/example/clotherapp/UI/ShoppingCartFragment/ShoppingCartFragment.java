@@ -1,5 +1,6 @@
 package com.example.clotherapp.UI.ShoppingCartFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,9 @@ import com.android.volley.VolleyError;
 import com.example.clotherapp.ADAPTER.AdapterCart;
 import com.example.clotherapp.DAO.DAOCart;
 import com.example.clotherapp.MODEL.Cart;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.R;
+//import com.example.clotherapp.UI.ThanhToan;
 
 import java.util.ArrayList;
 
@@ -84,13 +87,21 @@ public class ShoppingCartFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Handle the click event for the buy button
+                double sum = sumTotalPrice();
+                if(sum == 0) {
+                    Toast.makeText(getContext(), "Vui lòng chọn sản phẩm trước khi thanh toán", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Toast.makeText(getContext(), "Proceed to buy", Toast.LENGTH_SHORT).show();
+//                Intent i = new Intent(getActivity(), ThanhToan.class);
+//                i.putExtra("total",sum);
+//                startActivity(i);
             }
         });
     }
 
     private void loadData() {
-        cart.getAllCarts(getContext(), 1, new DAOCart.CartLoadedCallback() {
+        cart.getAllCarts(getContext(), DataHolder.getInstance().getId(), new DAOCart.CartLoadedCallback() {
             @Override
             public void onCartLoaded(ArrayList<Cart> carts) {
                 listCarts = carts;

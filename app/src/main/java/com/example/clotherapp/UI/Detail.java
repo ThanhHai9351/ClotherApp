@@ -38,7 +38,7 @@ public class Detail extends AppCompatActivity {
     String imgpro,namepro,despro,color = "white";
     Double pricepro;
 
-    String urlAddFavourite = "http://" + ip + "/clotherapp/handle/createFavourite.php";
+    String urlAddFavourite = ip + "/clotherapp/handle/createFavourite.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class Detail extends AppCompatActivity {
          pricepro = get.getDoubleExtra("price",0);
          despro = get.getStringExtra("description");
         idpro =get.getIntExtra("id",0);
-        Picasso.with(this).load(imgpro)
+        Picasso.with(Detail.this).load(DataHolder.getInstance().getIp()+"assets/images/products/"+imgpro)
                 .resize(300, 300)
                 .into(img);
         name.setText(namepro);
@@ -90,7 +90,7 @@ public class Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Cart cart = new Cart();
-                Toast.makeText(getApplicationContext(),"Đã thêm vào yêu thích",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Đã thêm vào giỏ hàng",Toast.LENGTH_SHORT).show();
                 cart.addCart(getApplicationContext(),DataHolder.getInstance().getId(), idpro,sl,pricepro,color,size);
             }
         });

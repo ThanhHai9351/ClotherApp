@@ -54,6 +54,8 @@
                 android:layout_marginRight="30dp"
                 android:hint="Name"
                 android:padding="10dp"
+                android:textColorHint="#AEA8A8"
+                android:textColor="@color/black"
                 android:background="@drawable/custom_textfield"
                 android:inputType="textPersonName" />
 
@@ -67,6 +69,8 @@
                 android:layout_marginRight="30dp"
                 android:hint="Username"
                 android:padding="10dp"
+                android:textColorHint="#AEA8A8"
+                android:textColor="@color/black"
                 android:background="@drawable/custom_textfield"
                 android:inputType="textEmailAddress" />
 
@@ -80,6 +84,8 @@
                 android:layout_marginRight="30dp"
                 android:hint="Password"
                 android:padding="10dp"
+                android:textColorHint="#AEA8A8"
+                android:textColor="@color/black"
                 android:background="@drawable/custom_textfield"
                 android:inputType="textPassword" />
 
@@ -94,6 +100,8 @@
                 android:background="@drawable/custom_textfield"
                 android:hint="Confirm password"
                 android:inputType="textPassword"
+                android:textColorHint="#AEA8A8"
+                android:textColor="@color/black"
                 android:padding="10dp" />
 
             <CheckBox
@@ -103,6 +111,7 @@
                 android:layout_below="@id/edt_confirm_password"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/black"
                 android:text="I agree to all Term, Privacy and Fees" />
 
             <Button

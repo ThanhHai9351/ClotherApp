@@ -12,8 +12,6 @@ public class Cart {
         int id;
         int user;
 
-
-
         int idProduct;
         String image,name,nameCategory;
         double price;

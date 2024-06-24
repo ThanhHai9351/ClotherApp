@@ -7,7 +7,7 @@ public class DataHolder {
     private String name;
     private String username;
 
-    private String ip = "192.168.3.77:80";
+    private String ip = "https://tam1111.000webhostapp.com/";
 
     public String getIp() {
         return ip;

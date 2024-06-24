@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.MODEL.Favourite;
 import com.example.clotherapp.R;
 import com.squareup.picasso.Picasso;
@@ -72,7 +73,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Favourite favourite = favourites.get(position);
-        Picasso.with(context).load(favourite.getImage())
+        Picasso.with(context).load(DataHolder.getInstance().getIp()+"assets/images/products/"+favourite.getImage())
                 .resize(300, 300)
                 .into(holder.img);
         holder.name.setText(favourite.getNameProduct());

@@ -1,5 +1,8 @@
 package com.example.clotherapp.UI.InfoFragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.R;
+import com.example.clotherapp.UI.Login;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +23,8 @@ import com.example.clotherapp.R;
  * create an instance of this fragment.
  */
 public class InfoFragment extends Fragment {
+    TextView nameUser;
+    LinearLayout logout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +69,47 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        View view =  inflater.inflate(R.layout.fragment_info, container, false);
+        controls(view);
+        events();
+        return view;
+    }
+    public void controls(View view)
+    {
+        nameUser = view.findViewById(R.id.tw_name_info);
+        nameUser.setText(DataHolder.getInstance().getName());
+        logout = view.findViewById(R.id.ln_logout);
+    }
+
+    public void events()
+    {
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("Logout");
+                builder.setMessage("Are you sure you want to logout?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(getContext(), Login.class);
+                        startActivity(i);
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
     }
 }

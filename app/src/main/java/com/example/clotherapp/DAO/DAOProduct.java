@@ -23,7 +23,7 @@ public class DAOProduct {
 
     private static final String TAG = "DAOProduct";
     public String ip = DataHolder.getInstance().getIp();
-    public String url = "http://" + ip + "/clotherapp/handle/getDataProduct.php";
+    public String url = ip + "clotherapp/handle/getDataProduct.php";
     private RequestQueue requestQueue;
 
     public DAOProduct(Context context) {

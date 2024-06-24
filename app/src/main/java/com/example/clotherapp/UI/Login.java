@@ -33,6 +33,13 @@ public class Login extends AppCompatActivity {
         events();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        controls();
+        events();
+    }
+
     public void controls()
     {
         btnLogin = findViewById(R.id.btn_login);

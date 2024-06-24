@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.MODEL.Product;
 import com.example.clotherapp.R;
 import com.squareup.picasso.Picasso;
@@ -72,7 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product p = products.get(position);
-        Picasso.with(context).load(p.getImage())
+        Picasso.with(context).load(DataHolder.getInstance().getIp()+"assets/images/products/"+p.getImage())
                 .resize(300, 300)
                 .into(holder.img);
         String name = p.getNameProduct().substring(0,20);

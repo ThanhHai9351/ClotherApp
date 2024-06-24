@@ -22,7 +22,7 @@ public class DAOFavourite {
     private static final String TAG = "DAOFavourite";
     public String ip = DataHolder.getInstance().getIp();
 
-    public String url = "http://" + ip + "/clotherapp/handle/getDataFavourite.php";
+    public String url = ip + "clotherapp/handle/getDataFavourite.php";
     private RequestQueue requestQueue;
 
     public DAOFavourite(Context context) {

@@ -165,6 +165,21 @@ public class ProductFragment extends Fragment {
                         productList = products;
                         productAdapter = new ProductAdapter(getContext(), productList);
                         recyclerViewProduct.setAdapter(productAdapter);
+
+                        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Product product) {
+                                Intent intent = new Intent(getContext(), Detail.class);
+                                intent.putExtra("id",product.getId());
+                                intent.putExtra("name",product.getNameProduct());
+                                intent.putExtra("image",product.getImage());
+                                intent.putExtra("star",product.getStar());
+                                intent.putExtra("price",product.getPrice());
+                                intent.putExtra("quantity",product.getQuantity());
+                                intent.putExtra("description",product.getDescription());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
 
@@ -191,6 +206,21 @@ public class ProductFragment extends Fragment {
                         }
                         productAdapter = new ProductAdapter(getContext(), productList);
                         recyclerViewProduct.setAdapter(productAdapter);
+
+                        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Product product) {
+                                Intent intent = new Intent(getContext(), Detail.class);
+                                intent.putExtra("id",product.getId());
+                                intent.putExtra("name",product.getNameProduct());
+                                intent.putExtra("image",product.getImage());
+                                intent.putExtra("star",product.getStar());
+                                intent.putExtra("price",product.getPrice());
+                                intent.putExtra("quantity",product.getQuantity());
+                                intent.putExtra("description",product.getDescription());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
 
@@ -218,6 +248,21 @@ public class ProductFragment extends Fragment {
                         }
                         productAdapter = new ProductAdapter(getContext(), productList);
                         recyclerViewProduct.setAdapter(productAdapter);
+
+                        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Product product) {
+                                Intent intent = new Intent(getContext(), Detail.class);
+                                intent.putExtra("id",product.getId());
+                                intent.putExtra("name",product.getNameProduct());
+                                intent.putExtra("image",product.getImage());
+                                intent.putExtra("star",product.getStar());
+                                intent.putExtra("price",product.getPrice());
+                                intent.putExtra("quantity",product.getQuantity());
+                                intent.putExtra("description",product.getDescription());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
 
@@ -244,6 +289,21 @@ public class ProductFragment extends Fragment {
                         }
                         productAdapter = new ProductAdapter(getContext(), productList);
                         recyclerViewProduct.setAdapter(productAdapter);
+
+                        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Product product) {
+                                Intent intent = new Intent(getContext(), Detail.class);
+                                intent.putExtra("id",product.getId());
+                                intent.putExtra("name",product.getNameProduct());
+                                intent.putExtra("image",product.getImage());
+                                intent.putExtra("star",product.getStar());
+                                intent.putExtra("price",product.getPrice());
+                                intent.putExtra("quantity",product.getQuantity());
+                                intent.putExtra("description",product.getDescription());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
 
@@ -270,6 +330,21 @@ public class ProductFragment extends Fragment {
                         }
                         productAdapter = new ProductAdapter(getContext(), productList);
                         recyclerViewProduct.setAdapter(productAdapter);
+
+                        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Product product) {
+                                Intent intent = new Intent(getContext(), Detail.class);
+                                intent.putExtra("id",product.getId());
+                                intent.putExtra("name",product.getNameProduct());
+                                intent.putExtra("image",product.getImage());
+                                intent.putExtra("star",product.getStar());
+                                intent.putExtra("price",product.getPrice());
+                                intent.putExtra("quantity",product.getQuantity());
+                                intent.putExtra("description",product.getDescription());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
                 productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {

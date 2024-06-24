@@ -28,7 +28,7 @@ import java.util.Locale;
 public class DAOAccount {
     private static final String TAG = "DAOAccount";
     private static final String IP = DataHolder.getInstance().getIp();
-    private static final String URL = "http://" + IP + "/clotherapp/handle/getDataAccount.php";
+    private static final String URL =IP + "clotherapp/handle/getDataAccount.php";
     private RequestQueue requestQueue;
 
     public DAOAccount(Context context) {

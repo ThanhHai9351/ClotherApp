@@ -46,7 +46,7 @@ public class FavouriteFragment extends Fragment {
 
     public String ip = DataHolder.getInstance().getIp();
 
-    public String urlDeleteFavourite = "http://" + ip + "/clotherapp/handle/deleteFavourite.php";
+    public String urlDeleteFavourite = ip + "/clotherapp/handle/deleteFavourite.php";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -3,9 +3,25 @@ package com.example.clotherapp.MODEL;
 import java.util.Date;
 
 public class Receipt {
-    int id,idUser,idProduct,idPayment,size;
+    int id;
+    int idUser;
+    int idProduct; // Bổ sung trường IDProduct
     double totalMoney;
+    String payMethod;
+    Date paidDate;
     String color;
+    int size;
+
+    public Receipt(int id, int idUser, int idProduct, double totalMoney, String payMethod, Date paidDate, String color, int size) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idProduct = idProduct;
+        this.totalMoney = totalMoney;
+        this.payMethod = payMethod;
+        this.paidDate = paidDate;
+        this.color = color;
+        this.size = size;
+    }
 
     public int getId() {
         return id;
@@ -31,28 +47,28 @@ public class Receipt {
         this.idProduct = idProduct;
     }
 
-    public int getIdPayment() {
-        return idPayment;
-    }
-
-    public void setIdPayment(int idPayment) {
-        this.idPayment = idPayment;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     public double getTotalMoney() {
         return totalMoney;
     }
 
     public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
+    }
+
+    public String getPayMethod() {
+        return payMethod;
+    }
+
+    public void setPayMethod(String payMethod) {
+        this.payMethod = payMethod;
+    }
+
+    public Date getPaidDate() {
+        return paidDate;
+    }
+
+    public void setPaidDate(Date paidDate) {
+        this.paidDate = paidDate;
     }
 
     public String getColor() {
@@ -63,24 +79,11 @@ public class Receipt {
         this.color = color;
     }
 
-    public Date getPaidAt() {
-        return paidAt;
+    public int getSize() {
+        return size;
     }
 
-    public void setPaidAt(Date paidAt) {
-        this.paidAt = paidAt;
-    }
-
-    public Receipt(int id, int idUser, int idProduct, int idPayment, int size, double totalMoney, String color, Date paidAt) {
-        this.id = id;
-        this.idUser = idUser;
-        this.idProduct = idProduct;
-        this.idPayment = idPayment;
+    public void setSize(int size) {
         this.size = size;
-        this.totalMoney = totalMoney;
-        this.color = color;
-        this.paidAt = paidAt;
     }
-
-    Date paidAt;
 }

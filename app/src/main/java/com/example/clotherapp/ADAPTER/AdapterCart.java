@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.clotherapp.DAO.ConnectDB;
 import com.example.clotherapp.MODEL.Cart;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -70,10 +71,9 @@ public class AdapterCart extends ArrayAdapter {
         tvQuantity.setText(""+cart.getQuantity());
         tvNameSize.setText("Size: "+cart.getSize());
         tvNameColor.setText("Color: "+cart.getColor());
-        Picasso.with(context).load(cart.getImage())
+        Picasso.with(context).load(DataHolder.getInstance().getIp()+"assets/images/products/"+cart.getImage())
                 .resize(300, 300)
                 .into(img);
-
         tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +95,7 @@ public class AdapterCart extends ArrayAdapter {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cart.deleteProductInCart(view.getContext(),cart.getUser(),cart.getId());
+                cart.deleteProductInCart(view.getContext(),cart.getUser(),cart.getIdProduct());
                 notifyDataSetChanged();
                 Toast.makeText(context,"Xóa sản phẩm này khoải giỏ hàng",Toast.LENGTH_SHORT).show();
             }

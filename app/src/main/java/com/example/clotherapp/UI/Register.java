@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.clotherapp.MODEL.DataHolder;
 import com.example.clotherapp.R;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ public class Register extends AppCompatActivity {
     EditText name, username, pass, confirmpass;
     Button register;
     CheckBox cbConfirm;
-    String IP = "192.168.3.139:80";
-    String urlRegister = "http://" + IP + "/clotherapp/handle/registerAccount.php";
+    String IP = DataHolder.getInstance().getIp();
+    String urlRegister = IP + "clotherapp/handle/registerAccount.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

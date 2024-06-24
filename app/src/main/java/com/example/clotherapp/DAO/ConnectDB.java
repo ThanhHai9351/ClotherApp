@@ -4,7 +4,7 @@ import com.example.clotherapp.MODEL.DataHolder;
 
 public class ConnectDB {
     private static String ip= DataHolder.getInstance().getIp();
-    private static String url="http://"+ip+"/clotherapp/";
+    private static String url= ip;
 
     public static String getUrl() {
         return url;
